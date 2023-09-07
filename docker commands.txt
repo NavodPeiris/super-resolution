@@ -1,0 +1,9 @@
+inside superResolution folder run following command:
+
+docker build -t superres .
+
+to run the container:
+
+docker run -p 8000:8000 --name superres-api superres
+
+TODO: upload to AWS

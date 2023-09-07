@@ -1,0 +1,12 @@
+uvicorn
+gunicorn
+glob2
+opencv-python-headless
+numpy
+torch 
+torchvision 
+torchaudio
+fastapi
+sockets
+python-multipart
+accelerate
