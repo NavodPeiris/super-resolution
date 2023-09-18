@@ -12,22 +12,28 @@ jobs:
     name: Build Image
     runs-on: ubuntu-latest
 
-
+   
     steps:
 
-      - name: Check out code
+    - name: Check out code
       uses: actions/checkout@v2
-
-      - name: Login to Public ECR
-      uses: docker/login-action@v1
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        registry: public.ecr.aws
-        username: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
-      - name: Push to ECR
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
       env:
-        IMAGE_TAG: ${{ github.sha }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: photolab
+        IMAGE_TAG: super
       run: |
-        docker build -t public.ecr.aws/i0c1z9z6/photolab:latest .
-        docker push public.ecr.aws/i0c1z9z6/photolab:latest
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
