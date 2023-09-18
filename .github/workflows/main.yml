@@ -25,8 +25,8 @@ jobs:
           AWS_REGION: us-east-1
 
       - name: Push to ECR
-      env:
-        IMAGE_TAG: ${{ github.sha }}
-      run: |
-        docker build -t public.ecr.aws/i0c1z9z6/photolab:latest .
-        docker push public.ecr.aws/i0c1z9z6/photolab
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t public.ecr.aws/i0c1z9z6/photolab:latest .
+          docker push public.ecr.aws/i0c1z9z6/photolab
