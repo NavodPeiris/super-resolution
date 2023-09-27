@@ -28,5 +28,5 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t public.ecr.aws/i0c1z9z6/photolab:latest .
+          docker build -t public.ecr.aws/i0c1z9z6/photolab:super-resolution .
           docker push public.ecr.aws/i0c1z9z6/photolab
